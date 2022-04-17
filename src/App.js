@@ -1,25 +1,74 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState} from "react"
+import validator from "validator";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [signup, setSignup] = useState({
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+    const [error,setError] = useState("")
+
+    const handleChange = (e) => {
+        setSignup({
+            ...signup,
+            [e.target.name]: e.target.value
+        })
+    };
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        if (!validator.isEmail(signup.email)) {
+            return setError("The email you input is invalid")
+        }
+    }
+
+    return (
+        <div className={"container my-5"}>
+            <form>
+                <div className={"mb-3"}>
+                    <label className={"form-label"} htmlFor="email">
+                        email address
+                    </label>
+                    <input type="email"
+                           id={"email"}
+                           name={"email"}
+                           value={signup.email}
+                           onChange={handleChange}
+                           className={"form-control"}/>
+                </div>
+                <div className={"mb-3"}>
+                    <label className={"form-label"} htmlFor="password">
+                        password
+                    </label>
+                    <input type="password"
+                           id={"password"}
+                           name={"password"}
+                           value={signup.password}
+                           onChange={handleChange}
+                           className={"form-control"}/>
+                </div>
+                <div className={"mb-3"}>
+                    <label className={"form-label"} htmlFor="confirmPassword">
+                        confirm password
+                    </label>
+                    <input type="password"
+                           id={"confirmPassword"}
+                           name={"confirmPassword"}
+                           value={signup.confirmPassword}
+                           onChange={handleChange}
+                           className={"form-control"}/>
+                </div>
+                {error && <p className={"text-danger"}>{error}</p>}
+                <button type={"submit"}
+                        className={"btn btn-primary"}
+                        onClick={handleClick}
+                >Submit
+                </button>
+            </form>
+        </div>
+    );
 }
 
 export default App;
