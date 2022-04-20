@@ -8,7 +8,7 @@ function App() {
         password: "",
         confirmPassword: ""
     });
-    const [error,setError] = useState("")
+    const [error, setError] = useState("")
 
     const handleChange = (e) => {
         setSignup({
@@ -16,16 +16,13 @@ function App() {
             [e.target.name]: e.target.value
         })
     };
-
     const handleClick = (e) => {
         e.preventDefault()
         if (!validator.isEmail(signup.email)) {
             return setError("The email you input is invalid")
-        }
-        else if (signup.password.length < 5){
+        } else if (signup.password.length < 5) {
             return setError("The password should contain 5 or more characters")
-        }
-        else if (signup.password !== signup.confirmPassword){
+        } else if (signup.password !== signup.confirmPassword) {
             return setError("Passwords are not the same,Try again")
         }
     }
